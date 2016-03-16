@@ -76,6 +76,7 @@ bool ThreadPool::empty()
 
 void ThreadPool::addTask(int priority, callable call_me)
 {
+    unique_lock<mutex> lock(m_mutex);
     m_tasksQueue.push(new Task(priority, call_me));
     m_condVar.notify_all();
 }
